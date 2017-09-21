@@ -34,5 +34,8 @@ require('calculateShippingCost.php');
             <input type="text" pattern="[0-9]{5}" required name="toZipCode" id="toZipCode" value="<?=sanitize($toZipCode)?>" placeholder="Enter 5-digit destination zip code" title="Enter 5-digit zipcode"/><br /><br />
         </fieldset><br />
         <input id="submitButton" type="submit" name="submitButton" value="Calculate Cost"/><br /><br />
+        <?php if ($shipCost != 0): ?>
+            <label type="text" name="ShippingCost"> Shipping Cost is $<?=sanitize($shipCost)?></label>
+        <?php endif; ?>
     </form>
 </body>
