@@ -1,7 +1,8 @@
 <?php
 require('helpers.php');
-
+#---------------------------------------------#
 # Set default values for variables if not Set
+#---------------------------------------------#
 
 if (isset($_GET['custName'])) {
   $custName=$_GET['custName'];
@@ -26,11 +27,13 @@ elseif ($shipType=="overnight")
   $overnight="CHECKED";
 
 $booksOnly="";
-# GET will not have booksOnly value (checkbox) if not set. The 2nd check in the if statmeent (to check if 'on'') is therefore redudant
+# GET will not have booksOnly value (checkbox) if not set.
+#The 2nd check in the if statmeent (to check if 'on'') is therefore redudant
 if (isset($_GET['booksOnly']) && $_GET['booksOnly']=="on") {
   $booksOnly="CHECKED";
 }
 
+# set from and to Zipcodes
 if (isset($_GET['fromZipCode'])) {
   $fromZipCode=$_GET['fromZipCode'];
 }else {

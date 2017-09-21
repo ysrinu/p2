@@ -14,7 +14,6 @@ require('calculateShippingCost.php');
         Calculate shipping cost between two different zip codes.
     </p>
     </section>
-
     <form action="/" method="GET">
         <fieldset>
             <legend>Customer and Package Information</legend>
@@ -33,7 +32,6 @@ require('calculateShippingCost.php');
             <input type="text" pattern="[0-9]{5}" required name="fromZipCode" id="fromZipCode" value="<?=sanitize($fromZipCode)?>" placeholder="Enter 5-digit origin zip code" title="Enter 5-digit zipcode"/><br /><br />
             <label for="toZipCode" class="category">To ZIP Code (Required)</label><br />
             <input type="text" pattern="[0-9]{5}" required name="toZipCode" id="toZipCode" value="<?=sanitize($toZipCode)?>" placeholder="Enter 5-digit destination zip code" title="Enter 5-digit zipcode"/><br /><br />
-
         </fieldset><br />
         <input id="submitButton" type="submit" name="submitButton" value="Calculate Cost"/><br /><br />
     </form>
