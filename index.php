@@ -18,7 +18,7 @@ require('calculateShippingCost.php');
         <fieldset>
             <legend>Customer and Package Information</legend>
             <label for="custName" class="category">Name (Required)</label><br />
-            <input type="text" name="custName" required id="custName" value="<?php echo ($form->get('custName','')) ?>" placeholder="Enter Customer Name" autofocus="autofocus"/><br /><br />
+            <input type="text" name="custName" required id="custName" value="<?= $form->get('custName','') ?>" placeholder="Enter Customer Name" autofocus="autofocus"/><br /><br />
             <label class="category">Shipping Type (Required)</label><br />
             <input type="radio" name="shipType" required id="ground" value="ground" <?php if ($form->isMatch('shipType','ground')) echo 'CHECKED' ?> /><label for="ground">Ground</label><br>
             <input type="radio" name="shipType" required id="express" value="express" <?php if ($form->isMatch('shipType','express')) echo 'CHECKED' ?> /><label for="express">Express</label><br>
@@ -29,9 +29,9 @@ require('calculateShippingCost.php');
         <fieldset>
             <legend>Shipping Origin and Destination</legend>
             <label for="fromZipCode" class="category">From ZIP Code (Required)</label><br />
-            <input type="text" pattern="[0-9]{5}" required name="fromZipCode" id="fromZipCode" value="<?php echo ($form->get('fromZipCode','')) ?>" placeholder="Enter 5-digit origin zip code" title="Enter 5-digit zipcode"/><br /><br />
+            <input type="text" pattern="[0-9]{5}" required name="fromZipCode" id="fromZipCode" value="<?= $form->get('fromZipCode','') ?>" placeholder="Enter 5-digit origin zip code" title="Enter 5-digit zipcode"/><br /><br />
             <label for="toZipCode" class="category">To ZIP Code (Required)</label><br />
-            <input type="text" pattern="[0-9]{5}" required name="toZipCode" id="toZipCode" value="<?php echo ($form->get('toZipCode','')) ?>" placeholder="Enter 5-digit destination zip code" title="Enter 5-digit zipcode"/><br /><br />
+            <input type="text" pattern="[0-9]{5}" required name="toZipCode" id="toZipCode" value="<?= $form->get('toZipCode','') ?>" placeholder="Enter 5-digit destination zip code" title="Enter 5-digit zipcode"/><br /><br />
         </fieldset><br />
         <input id="submitButton" type="submit" name="submitButton" value="Calculate Cost"/><br /><br />
         <?php if (isset($errors) && !empty($errors)) :?>
