@@ -16,7 +16,7 @@ legend {
 }
 
 body {
-    width: 300px;
+    width: 400px;
     margin: auto;
 }
 
@@ -29,6 +29,18 @@ body {
     border-color: orange;
     border-width: medium;
     border-radius: 5%;
+}
+
+.alertdanger {
+    background-color: red;
+    color: white;
+}
+
+.output {
+    background-color: yellow;
+    color: green;
+    font-size: large;
+    font-weight: bold;
 }
 
 footer {

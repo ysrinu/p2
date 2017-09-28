@@ -1,67 +1,38 @@
 <?php
+require('Form.php');
 require('helpers.php');
-#---------------------------------------------#
-# Set default values for variables if not Set
-#---------------------------------------------#
+require('Cost.php');
 
-if (isset($_GET['custName'])) {
-  $custName=$_GET['custName'];
-}else {
-  $custName='';
-}
+#import classes
+use Shipping\Cost;
+use DWA\Form;
 
-# default ship type options (radio buttons) to null (unchecked)
-$ground="";
-$express="";
-$overnight="";
-$shipType="";
-$shipTypeSurcharge=0;
+# Instantiate a new Form object
+$form = new Form($_GET);
 
-if (isset($_GET['shipType']))  $shipType=$_GET['shipType'];
+if (!$form->isSubmitted()) return; # if form not submitted then nothing to do further here
 
-# based on shipping type, set the corresponding radio button as checked
-if ($shipType=="ground"){
-    $ground="CHECKED";
-    $shipTypeSurcharge=10;
-}
-elseif ($shipType=="express"){
-  $express="CHECKED";
-  $shipTypeSurcharge=50;
-}
-elseif ($shipType=="overnight"){
-  $overnight="CHECKED";
-  $shipTypeSurcharge=100;
-}
+# Retrieve data from form, default to empty string (or false if boolean) if value not provided
+$custName = $form->get('custName', '');
+$shipType = $form->get('shipType', '');
+$fromZipCode = $form->get('fromZipCode', '');
+$toZipCode = $form->get('toZipCode', '');
+$booksOnly = $form->isChosen('booksOnly');
 
+# peform validation on the form fields
+$errors = $form->validate(
+  [
+    'custName' => 'required|alpha',
+    'shipType' => 'required',
+    'fromZipCode' => 'required|zipcode',
+    'toZipCode' => 'required|zipcode',
+  ]
+);
 
-$booksOnly="";
-# GET will not have booksOnly value (checkbox) if not set.
-#The 2nd check in the if statmeent (to check if 'on'') is therefore redudant
-if (isset($_GET['booksOnly']) && $_GET['booksOnly']=="on") {
-  $booksOnly="CHECKED";
-}
+if (!empty($errors)) return; # if any form input errors then return at this point
 
-# set from and to Zipcodes
-if (isset($_GET['fromZipCode'])) {
-  $fromZipCode=$_GET['fromZipCode'];
-}else {
-  $fromZipCode='';
-}
+# Instantiate a new Cost object
+$cost = new Cost($custName,$shipType,$booksOnly,$fromZipCode,$toZipCode);
 
-if (isset($_GET['toZipCode'])) {
-  $toZipCode=$_GET['toZipCode'];
-}else {
-  $toZipCode='';
-}
-
-# Compute shipping cost
-$shipCost=0;
-
-# For the sake of simplicity, we will calculate the distance between two zipcodes as the differene of their numeric zipcodes, miles as the unit
-# Ideally, we should lookup a web service that will return distance between geogrphical pg_connection_status
-$dist = ABS( intval($fromZipCode) - intval($toZipCode));
-$chargePerMile=0.25; // 25 cents!
-$shipCost=($dist * $chargePerMile) + $shipTypeSurcharge;
-
-# if book-only, give 10% discount
-if ($booksOnly=="CHECKED") $shipCost = $shipCost * 0.90;
+# Call function to compute the shipping cost
+$shippingCost = $cost->getShippingCost();
